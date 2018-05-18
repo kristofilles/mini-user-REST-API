@@ -3,16 +3,23 @@ package com.codecool.userapi.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "felhasznalo")
+@Table(name = "users")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+    @Column(name = "name")
     private String userName;
+    @Column(name = "email")
     private String email;
 
     public User() {
+    }
+
+    public User(String userName, String email) {
+        this.userName = userName;
+        this.email = email;
     }
 
     public long getId() {
