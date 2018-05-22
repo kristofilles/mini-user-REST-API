@@ -3,6 +3,7 @@ package com.codecool.userapi.service;
 import com.codecool.userapi.model.User;
 import com.codecool.userapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,8 +18,9 @@ public class UserService {
         this.repository = repository;
     }
 
-    public void addUser(User user) {
+    public HttpStatus addUser(User user) {
         repository.save(user);
+        return HttpStatus.ACCEPTED;
     }
 
     public void deleteUser(long id) {
@@ -32,5 +34,7 @@ public class UserService {
     public List<User> findAllUser() {
         return repository.findAll();
     }
+
+    public User findUserByName(String name) {return repository.findUserByUserName(name);}
 
 }
