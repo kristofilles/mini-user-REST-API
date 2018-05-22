@@ -1,6 +1,8 @@
 package com.codecool.userapi.controller;
 
+import com.codecool.userapi.model.Admin;
 import com.codecool.userapi.model.User;
+import com.codecool.userapi.service.AdminService;
 import com.codecool.userapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,9 +11,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-public class UserController {
+public class ApiController {
 
     private UserService service;
+    private AdminService adminService;
+
+    @Autowired
+    public void setAdminService(AdminService adminService) {
+        this.adminService = adminService;
+    }
 
     @Autowired
     public void setService(UserService service) {
@@ -45,10 +53,9 @@ public class UserController {
 
     @CrossOrigin
     @RequestMapping(value = "/api/login", method = RequestMethod.POST)
-    public HttpStatus login(@RequestParam("name") String name, @RequestParam("password") String password) {
-        User userToLogin = new User(name, password);
-        User userInDatabase = service.findUserByName(name);
-        if (userToLogin.getPassword().equals(userInDatabase.getPassword())) {
+    public HttpStatus login(@RequestBody Admin adminToLogin) {
+        Admin adminInDatabase = adminService.findAdminByName(adminToLogin.getName());
+        if (adminToLogin.getPassword().equals(adminInDatabase.getPassword())) {
             return HttpStatus.ACCEPTED;
         }
         return HttpStatus.FORBIDDEN;
