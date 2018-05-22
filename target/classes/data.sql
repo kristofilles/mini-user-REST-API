@@ -1,1 +1,1 @@
-insert into users (id, name, email, password) values (1, 'admin', 'admin@mail.hu', 'admin');
+insert into admins (id, name, password) values (1, 'admin', 'admin');

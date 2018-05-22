@@ -18,9 +18,8 @@ public class UserService {
         this.repository = repository;
     }
 
-    public HttpStatus addUser(User user) {
+    public void addUser(User user) {
         repository.save(user);
-        return HttpStatus.ACCEPTED;
     }
 
     public void deleteUser(long id) {

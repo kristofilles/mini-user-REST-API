@@ -44,16 +44,20 @@ public class ApiController {
         return "deleted";
     }
 
+    @CrossOrigin
     @RequestMapping(value = "/api/register", method = RequestMethod.POST)
-    public HttpStatus registerUser(@RequestParam("name") String name, @RequestParam("email") String email,
-                                   @RequestParam("password") String password) {
-        User user = new User(name, email, password);
-        return service.addUser(user);
+    public HttpStatus registerUser(@RequestBody User user) {
+        service.addUser(user);
+        if (service.findUserByName(user.getUserName()).equals(user)) {
+            return HttpStatus.ACCEPTED;
+        }
+        return HttpStatus.FORBIDDEN;
     }
 
     @CrossOrigin
     @RequestMapping(value = "/api/login", method = RequestMethod.POST)
     public HttpStatus login(@RequestBody Admin adminToLogin) {
+        System.out.println(adminToLogin.toString());
         Admin adminInDatabase = adminService.findAdminByName(adminToLogin.getName());
         if (adminToLogin.getPassword().equals(adminInDatabase.getPassword())) {
             return HttpStatus.ACCEPTED;
