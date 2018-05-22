@@ -38,10 +38,14 @@ public class ApiController {
         return service.findUserById(id);
     }
 
+    @CrossOrigin
     @RequestMapping(value = "/api/delete/{id}", method = RequestMethod.GET)
-    public String deleteUser(@PathVariable("id") long id) {
+    public HttpStatus deleteUser(@PathVariable("id") long id) {
         service.deleteUser(id);
-        return "deleted";
+        if (service.findUserById(id)==null) {
+            return HttpStatus.ACCEPTED;
+        }
+        return HttpStatus.FORBIDDEN;
     }
 
     @CrossOrigin
