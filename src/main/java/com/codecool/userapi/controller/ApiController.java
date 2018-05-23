@@ -55,8 +55,7 @@ public class ApiController {
     @CrossOrigin
     @RequestMapping(value = "/api/login", method = RequestMethod.POST)
     public HttpStatus login(@RequestBody Admin adminToLogin) {
-        Admin adminInDatabase = adminService.findAdminByName(adminToLogin.getName());
-        if (adminToLogin.getPassword().equals(adminInDatabase.getPassword())) {
+        if (adminService.findAdminByName(adminToLogin.getName()) != null) {
             return HttpStatus.ACCEPTED;
         }
         return HttpStatus.FORBIDDEN;
