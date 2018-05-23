@@ -3,7 +3,6 @@ package com.codecool.userapi.service;
 import com.codecool.userapi.model.User;
 import com.codecool.userapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,6 +33,8 @@ public class UserService {
         return repository.findAll();
     }
 
-    public User findUserByName(String name) {return repository.findUserByUserName(name);}
+    public User findUserByName(String name) {
+        return repository.findUserByUserName(name);
+    }
 
 }

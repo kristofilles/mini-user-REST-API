@@ -50,6 +50,6 @@ public class Admin {
     public String toString() {
         return "id=" + id +
                 ", name='" + name + '\'' +
-                ", password='" + password ;
+                ", password='" + password + "'";
     }
 }

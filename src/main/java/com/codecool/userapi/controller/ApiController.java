@@ -32,17 +32,11 @@ public class ApiController {
         return service.findAllUser();
     }
 
-
-    @RequestMapping(value = "/api/users/{id}", method = RequestMethod.GET)
-    public User showOneUser(@PathVariable("id") long id) {
-        return service.findUserById(id);
-    }
-
     @CrossOrigin
     @RequestMapping(value = "/api/delete/{id}", method = RequestMethod.GET)
     public HttpStatus deleteUser(@PathVariable("id") long id) {
         service.deleteUser(id);
-        if (service.findUserById(id)==null) {
+        if (service.findUserById(id) == null) {
             return HttpStatus.ACCEPTED;
         }
         return HttpStatus.FORBIDDEN;
@@ -50,18 +44,17 @@ public class ApiController {
 
     @CrossOrigin
     @RequestMapping(value = "/api/register", method = RequestMethod.POST)
-    public HttpStatus registerUser(@RequestBody User user) {
+    public User registerUser(@RequestBody User user) {
         service.addUser(user);
         if (service.findUserByName(user.getUserName()).equals(user)) {
-            return HttpStatus.ACCEPTED;
+            return service.findUserByName(user.getUserName());
         }
-        return HttpStatus.FORBIDDEN;
+        return null;
     }
 
     @CrossOrigin
     @RequestMapping(value = "/api/login", method = RequestMethod.POST)
     public HttpStatus login(@RequestBody Admin adminToLogin) {
-        System.out.println(adminToLogin.toString());
         Admin adminInDatabase = adminService.findAdminByName(adminToLogin.getName());
         if (adminToLogin.getPassword().equals(adminInDatabase.getPassword())) {
             return HttpStatus.ACCEPTED;
